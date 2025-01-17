@@ -1,7 +1,6 @@
 
 package org.advisor.member;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.advisor.member.constants.Authority;
@@ -19,7 +18,7 @@ public class Member implements UserDetails {
     private Long seq;
     private String email;
     private String name;
-    @JsonAlias("authorities")
+
     private List<Authority> _authorities;
 
     @Override
