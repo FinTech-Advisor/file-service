@@ -39,6 +39,11 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'net.coobird:thumbnailator:0.4.20'
+
+	testImplementation 'org.springframework.security:spring-security-test'
+
 	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
 	annotationProcessor'com.querydsl:querydsl-apt:5.1.0:jakarta'
 	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
