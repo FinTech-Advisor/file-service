@@ -14,22 +14,19 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 public class FileController {
-    private final Utils utils;
 
     // 파일 업로드
     @PostMapping("/upload")
     public JSONData upload(@RequestPart("file") MultipartFile[] files, @Valid RequestUpload form, Errors errors) {
         if (errors.hasErrors()) {
-            throw new BadRequestException(utils.getErrorMessages(errors));
+            throw new BadRequestException();
         }
         return null;
     }
 
     // 파일 다운로드
     @GetMapping("/download/{seq}")
-    public void download(@PathVariable("seq") Long seq) {
-
-    }
+    public void download(@PathVariable("seq") Long seq) {}
 
     // 파일 단일 조회
     @GetMapping("/info/{seq}")
@@ -50,6 +47,5 @@ public class FileController {
     }
 
     @GetMapping("/thumb")
-    public void thumb(RequestThumb form, HttpServletResponse response) {
-    }
+    public void thumb(RequestThumb form, HttpServletResponse response) {}
 }
