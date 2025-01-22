@@ -4,8 +4,6 @@ package org.advisor.file.controllers;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.advisor.global.exceptions.BadRequestException;
-import org.advisor.global.libs.Utils;
 import org.advisor.global.rests.JSONData;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +16,6 @@ public class FileController {
     // 파일 업로드
     @PostMapping("/upload")
     public JSONData upload(@RequestPart("file") MultipartFile[] files, @Valid RequestUpload form, Errors errors) {
-        if (errors.hasErrors()) {
-            throw new BadRequestException();
-        }
         return null;
     }
 
