@@ -19,22 +19,22 @@ public class FileInfo extends BaseMemberEntity implements Serializable {
     private String gid;
 
     @Column(length=45)
-    private String location;  // 그룹 내에서 위치
+    private String location;
 
     @Column(length=100, nullable = false)
     private String fileName;
 
-    @Column(length=30)
-    private String extension;
-
     @Column(length=65)
     private String contentType;
 
-    @Transient
-    private String fileUrl;
+    @Column(length = 10)
+    private String extension;
 
     @Transient
-    private String filePath;
+    private String FilePath;
+
+    @Transient
+    private String FileUrl;
 
     @Transient
     private String thumbUrl;

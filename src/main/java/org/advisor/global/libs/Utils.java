@@ -1,12 +1,15 @@
 
 package org.advisor.global.libs;
 
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
@@ -23,6 +26,7 @@ public class Utils {
 
     private final HttpServletRequest request;
     private final MessageSource messageSource;
+    private final DiscoveryClient discoveryClient;
 
 
     public String getMessage(String code) {
@@ -42,31 +46,59 @@ public class Utils {
         }).filter(s -> !s.isBlank()).toList();
     }
 
-    /**
-     * REST 커맨드 객체 검증 실패시에 에러 코드를 가지고 메세지 추출
-     *
-     * @param errors
-     * @return
-     */
+
     public Map<String, List<String>> getErrorMessages(Errors errors) {
         ResourceBundleMessageSource ms = (ResourceBundleMessageSource) messageSource;
-
-        // 필드별 에러코드 - getFieldErrors()
-        // Collectors.toMap
         Map<String, List<String>> messages = errors.getFieldErrors()
                 .stream()
                 .collect(Collectors.toMap(FieldError::getField, f -> getMessages(f.getCodes()), (v1, v2) -> v2));
 
-        // 글로벌 에러코드 - getGlobalErrors()
         List<String> gMessages = errors.getGlobalErrors()
                 .stream()
                 .flatMap(o -> getMessages(o.getCodes()).stream())
                 .toList();
-        // 글로벌 에러코드 필드 - global
         if (!gMessages.isEmpty()) {
             messages.put("global", gMessages);
         }
 
         return messages;
     }
+
+
+    public String serviceUrl(String serviceId, String url) {
+        try {
+            List<ServiceInstance> instances = discoveryClient.getInstances(serviceId);
+            String profile = System.getenv("spring.profiles.active");
+            boolean isDev = StringUtils.hasText(profile) && profile.contains("dev");
+            String serviceUrl = null;
+            for (ServiceInstance instance : instances) {
+                String uri = instance.getUri().toString();
+                if (isDev && uri.contains("localhost")) {
+                    serviceUrl = uri;
+                } else if (!isDev && !uri.contains("localhost")) {
+                    serviceUrl = uri;
+                }
+            }
+
+            if (StringUtils.hasText(serviceUrl)) {
+                return serviceUrl + url;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    public String getAuthToken() {
+        String auth = request.getHeader("Authorization");
+
+        return StringUtils.hasText(auth) ? auth.substring(7).trim() : null;
+    }
+
+    public String getUrl(String url) {
+        return String.format("%s://%s:%d%s%s", request.getScheme(), request.getServerName(), request.getServerPort(), request.getContextPath(), url);
+    }
+
+
 }

@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class RequestUpload {
     @NotBlank
     private String gid;
-    private boolean done;
+    private String location;
+    private boolean done; // 업로드 하자마자 완료 처리
     public MultipartFile[] files;
+    public boolean single;
 }
