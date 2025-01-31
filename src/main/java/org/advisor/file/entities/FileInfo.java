@@ -1,11 +1,9 @@
 
 package org.advisor.file.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.advisor.global.entities.BaseMemberEntity;
-import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 
@@ -43,4 +41,5 @@ public class FileInfo extends BaseMemberEntity implements Serializable {
 
     private boolean selected;
 
+    private long listOrder;
 }

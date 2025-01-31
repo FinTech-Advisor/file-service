@@ -34,6 +34,8 @@ public class FileUploadService {
         String location = form.getLocation();
         MultipartFile[] files = form.getFiles();
         String rootPath = properties.getPath();
+        String contentType = form.getContentType();
+
 
         List<FileInfo> uploadedItems = new ArrayList<>();
 
@@ -52,6 +54,8 @@ public class FileUploadService {
             item.setGid(gid);
             item.setLocation(location);
             item.setFileName(fileName);
+            item.setContentType(contentType);
+
 
             fileInfoRepository.saveAndFlush(item);
 

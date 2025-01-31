@@ -37,8 +37,8 @@ public class FileController {
         if (errors.hasErrors()) {
             throw new BadRequestException(utils.getErrorMessages(errors));
         }
-
         form.setFiles(files);
+
         if(form.isSingle()){
             deleteService.deletes(form.getGid(), form.getLocation());
         }

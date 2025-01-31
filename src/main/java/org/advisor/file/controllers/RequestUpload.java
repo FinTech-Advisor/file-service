@@ -12,4 +12,5 @@ public class RequestUpload {
     private boolean done; // 업로드 하자마자 완료 처리
     public MultipartFile[] files;
     public boolean single;
+    private String contentType;
 }

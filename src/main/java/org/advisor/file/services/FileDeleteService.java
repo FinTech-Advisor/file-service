@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.advisor.file.constants.FileStatus;
 import org.advisor.file.entities.FileInfo;
 import org.advisor.file.repositories.FileInfoRepository;
-import org.advisor.global.Exceptions.UnAuthorizedException;
-import org.advisor.global.libs.Utils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.util.List;
@@ -19,7 +16,6 @@ import java.util.List;
 public class FileDeleteService {
     private final FileInfoService infoService;
     private final FileInfoRepository infoRepository;
-    private Utils utils;
 
     public FileInfo delete(Long seq) {
         FileInfo item = infoService.get(seq);

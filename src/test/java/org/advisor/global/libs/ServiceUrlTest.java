@@ -19,4 +19,10 @@ public class ServiceUrlTest {
         System.out.println(url);
         //System.out.println("test");
     }
+
+    @Test
+    void deleteTest(){
+        String url = utils.serviceUrl("file-service", "/delete");
+        System.out.println(url);
+    }
 }
