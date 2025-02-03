@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -26,17 +27,8 @@ public class FileUploadServiceTest {
 
     @BeforeEach
     void init() throws IOException {
-        image = new MockMultipartFile(
-                "feed1.jpg",
-                "feed1.jpg",
-                "image/jpg",
-                new FileInputStream(new File("C:/Users/admin/Downloads/feed1.jpg")));
-
-        image2 = new MockMultipartFile(
-                "test.jpg",
-                "spring.png",
-                "image/png",
-                new FileInputStream(new File("C:/Users/admin/Downloads/feed2.jpg")));
+        image = new MockMultipartFile("file", "test.png", MediaType.IMAGE_PNG_VALUE, new FileInputStream(new File("C:/test1.png")));
+        image2 = new MockMultipartFile("file2", "test2.png", MediaType.IMAGE_PNG_VALUE, new FileInputStream(new File("C:/test2.png")));
     }
 
     @Test
