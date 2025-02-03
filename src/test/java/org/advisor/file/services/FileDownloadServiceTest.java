@@ -33,10 +33,11 @@ public class FileDownloadServiceTest {
 
             form.setGid("asdf");
             form.setLocation("asdf");
-            form.setDone(false);
+            form.setDone(true);
             form.setContentType("image/jpg");
             form.setFiles(files);
 
+            service.process(0L);
         });
     }
 }

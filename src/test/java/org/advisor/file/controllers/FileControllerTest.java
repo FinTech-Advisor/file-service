@@ -1,6 +1,8 @@
 package org.advisor.file.controllers;
 
 
+import org.advisor.file.entities.FileInfo;
+import org.advisor.file.services.FileUploadService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,12 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,22 +30,31 @@ public class FileControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private FileUploadService uploadService;
+
     private MockMultipartFile file1;
     private MockMultipartFile file2;
+    private MockMultipartFile[] files;
 
     @BeforeEach
-    void init() {
-        file1 = new MockMultipartFile("file", "test1.png", MediaType.IMAGE_PNG_VALUE, new byte[] {1, 2, 3, 4});
-        file2 = new MockMultipartFile("file", "test1.png", MediaType.IMAGE_PNG_VALUE, new byte[] {1, 2, 3, 4});
+    void init() throws Exception{
+        file1 = new MockMultipartFile("file", "test1.png", MediaType.IMAGE_PNG_VALUE, new FileInputStream(new File ("C:/Users/admin/Downloads/feed1.jpg")));
+        file2 = new MockMultipartFile("file2", "test2.png", MediaType.IMAGE_PNG_VALUE, new FileInputStream(new File ("C:/Users/admin/Downloads/feed2.jpg")));
+        files = new MockMultipartFile[]{file1, file2};
     }
 
     @Test
     void fileUploadTest() throws Exception{
-        mockMvc.perform(multipart("/upload")
-                        .file(file1)
-                        .file(file2)
-                        .param("gid", "testgid")
-                        .param("location", "testlocation"))
-                .andDo(print());
+        assertDoesNotThrow(()->{
+            RequestUpload form = new RequestUpload();
+            form.setGid("");
+            form.setLocation("");
+            form.setDone(false);
+            form.setContentType("image/jpg");
+            form.setFiles(files);
+
+            List<FileInfo> fileInfos = uploadService.upload(form);
+        });
     }
 }
