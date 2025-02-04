@@ -25,8 +25,6 @@ public class ThumbnailService {
 
     private final FileProperties properties;
     private final FileInfoService infoService;
-    private final RestTemplate restTemplate;
-
 
     public String create(RequestThumb form) {
 
@@ -37,23 +35,14 @@ public class ThumbnailService {
 
         String thumbPath = getThumbPath(seq, url, width, height);
         File file = new File(thumbPath);
-        if (file.exists()) { // 이미 Thumbnail 이미지를 만든 경우
+        if (file.exists()) {
             return thumbPath;
         }
 
         try {
-            if (seq != null && seq > 0L) { // 서버에 올라간 파일
+            if (seq != null && seq > 0L) {
                 FileInfo item = infoService.get(seq);
                 Thumbnails.of(item.getFilePath())
-                        .size(width, height)
-                        .toFile(file);
-
-            } else if (StringUtils.hasText(url)) { // 원격 URL 이미지
-                String original = String.format("%s_original", thumbPath);
-                byte[] bytes = restTemplate.getForObject(URI.create(url), byte[].class);
-                Files.write(Paths.get(original), bytes);
-
-                Thumbnails.of(original)
                         .size(width, height)
                         .toFile(file);
             } else {
@@ -64,19 +53,14 @@ public class ThumbnailService {
         return thumbPath;
     }
 
-    /**
-     * Thumbnail 경로
-     * thumbs/폴더번호/seq_너비_높이.확장자
-     * thumbs/urls/정수해시코드_너비_높이.확장자
-     */
     public String getThumbPath(Long seq, String url, int width, int height) {
         String thumbPath = properties.getPath() + "thumbs/";
-        if (seq != null && seq > 0L) { // 직접 서버에 올린 파일
+        if (seq != null && seq > 0L) {
             FileInfo item = infoService.get(seq);
 
             thumbPath = thumbPath + String.format("%d/%d_%d_%d%s", seq % 10L, seq, width, height, item.getExtension());
-        } else if (StringUtils.hasText(url)){ // 원격 URL 이미지인 경우
-            String extension = url.lastIndexOf(".") == -1 ? "": url.substring(url.lastIndexOf("."));
+        } else if (StringUtils.hasText(url)) {
+            String extension = url.lastIndexOf(".") == -1 ? "" : url.substring(url.lastIndexOf("."));
             if (StringUtils.hasText(extension)) {
                 extension = extension.split("[?#]")[0];
             }

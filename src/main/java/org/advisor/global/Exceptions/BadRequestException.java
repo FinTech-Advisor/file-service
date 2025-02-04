@@ -1,14 +1,10 @@
-package org.advisor.global.exceptions;
+package org.advisor.global.Exceptions;
 
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- * 주로 검증 실패시 사용하는 예외
- * 응답 코드 400으로 고정(Bad Request)
- */
 public class BadRequestException extends CommonException {
     public BadRequestException() {
         this("BadRequest");

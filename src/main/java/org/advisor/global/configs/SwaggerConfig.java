@@ -1,4 +1,3 @@
-
 package org.advisor.global.configs;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -8,13 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info=@Info(title="파일 API"))
+@OpenAPIDefinition(info=@Info(title="File-Service"))
 public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi apiGroup() {
         return GroupedOpenApi.builder()
-                .group("파일 API v1")
+                .group("File-Service")
                 .pathsToMatch("/**")
                 .build();
     }

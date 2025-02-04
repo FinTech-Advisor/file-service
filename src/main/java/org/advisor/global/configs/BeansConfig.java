@@ -1,4 +1,3 @@
-
 package org.advisor.global.configs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

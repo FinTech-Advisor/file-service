@@ -1,4 +1,3 @@
-
 package org.advisor.member;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

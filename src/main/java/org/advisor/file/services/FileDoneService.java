@@ -17,12 +17,9 @@ public class FileDoneService {
     private final FileInfoService infoService;
     private final FileInfoRepository repository;
 
-
     public void process(String gid, String location) {
         List<FileInfo> items = infoService.getList(gid, location, FileStatus.ALL);
-
         items.forEach(item -> item.setDone(true));
-
         repository.saveAllAndFlush(items);
     }
 

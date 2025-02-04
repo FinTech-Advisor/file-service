@@ -1,4 +1,4 @@
-package org.advisor.global.exceptions;
+package org.advisor.global.Exceptions;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * 모든 사용자 정의 예외 상위 클래스
- *
- */
-@Getter @Setter
+@Getter
+@Setter
 public class CommonException extends RuntimeException {
     private HttpStatus status;
     private boolean errorCode;
@@ -23,11 +20,7 @@ public class CommonException extends RuntimeException {
         this.status = Objects.requireNonNullElse(status, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * RestController에서 커맨드 객체 검증 실패시 가공한 에러 메세지 정보
-     * @param errorMessages
-     * @param status
-     */
+
     public CommonException(Map<String, List<String>> errorMessages, HttpStatus status) {
         this.errorMessages = errorMessages;
         this.status = status;

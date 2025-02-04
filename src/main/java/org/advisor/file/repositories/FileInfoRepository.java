@@ -1,6 +1,5 @@
 package org.advisor.file.repositories;
 
-
 import org.advisor.file.entities.FileInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;

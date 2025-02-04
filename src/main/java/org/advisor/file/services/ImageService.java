@@ -1,4 +1,3 @@
-
 package org.advisor.file.services;
 
 import lombok.RequiredArgsConstructor;
@@ -13,15 +12,10 @@ import java.util.List;
 @Lazy
 @Service
 @RequiredArgsConstructor
-public class FileImageService {
+public class ImageService {
     private final FileInfoService infoService;
     private final FileInfoRepository repository;
 
-    /**
-     * 목록 노출 이미지 선택
-     *
-     * @param seq
-     */
     public void select(Long seq) {
         FileInfo item = infoService.get(seq);
         String gid = item.getGid();

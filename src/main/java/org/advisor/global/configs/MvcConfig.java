@@ -1,4 +1,3 @@
-
 package org.advisor.global.configs;
 
 import org.springframework.context.annotation.Configuration;
